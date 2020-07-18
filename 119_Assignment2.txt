@@ -1,0 +1,14 @@
+Assignment –2 Introducing Relational Databases. 
+ 
+1) Which field of the Customers table is the primary key?
+==CNUM 
+
+2) What is the 4th column of the Customers table?
+==RATING
+
+3) What is another word for row?  For column?
+==Row is also called as--Tuple,Entity,Opportunity 
+  column is also called as--Attribute, Method
+
+4) Why isn’t it possible to see the first five rows of a table? 
+==The rows of a table are not stored sequentially ,they are fragmented all over the DB server HD.
