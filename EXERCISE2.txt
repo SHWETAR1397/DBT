@@ -1,0 +1,138 @@
+create database ex2;
+use ex2;
+
+create table SUPLIER
+(
+`S#` char(2),
+Sname char(10),
+Status char(2),
+City char(10)
+);
+
+create table PARTS
+(
+`#P` char(2),
+Pname char(10),
+Color char(10),
+Weight char (2),
+City char(10)
+);
+
+create table PROJECTS
+(
+`J#` char(2),
+Jname char(10), 
+City char(10)
+); 
+
+create table SPJ
+(
+`S#` char(2),
+`P#` char(2),
+`J#` char(2),
+Qty char(2)
+);
+
+insert into SUPLIER values
+('S1','NANCY',10,'PARIS'),
+('S2','MARTHA',20,'LONDON'),
+('S3','JENN',15,'ATHENS'),
+('S4','ALLEN',40,'LONDON');
+select * from SUPLIER;
+
+insert into PARTS values
+('P1','BRAKE','BLACK',7,'ATHENS'),
+('P2','CLUTCH','SILVER',13,'LONDON'),
+('P3','SEAT','YELLOW',14,'PARIS'),
+('P4','ENGINE','BLACK',23,'ATHENS');
+select * from PARTS; 
+
+insert into PROJECTS values
+('J1','BIKE','LONDON'),
+('J2','CAR','ATHENS'),
+('J3','SCOOTER','PARIS'),
+('J4','BUS','ATHENS');
+select * from PROJECTS;
+
+insert into SPJ values
+('S1','P1','J1',8),
+('S2','P2','J2',15),
+('S3','P3','J3',21),
+('S4','P4','J4',13);
+select * from SPJ;
+
+-- 5
+select * from SUPLIER;
+
+-- 6
+select `S#`,Sname from SUPLIER;
+
+-- 7
+select Pname,Color from PARTS
+where City='LONDON';
+
+-- 8
+select * from SUPLIER
+where City='LONDON';
+
+-- 9
+select Sname,City from SUPLIER
+where (City='Paris' or City= 'Athens');
+
+-- 10
+select Jname,City from PROJECTS
+where City='ATHENS';
+
+-- 11
+select Pname from PARTS
+where Weight between 12 and 14;
+
+-- 12
+select * from SUPLIER
+where Status>=20;
+
+-- 13
+select * from SUPLIER
+where City<>'LONDON';
+
+-- 14
+select distinct City from SUPLIER;
+
+-- 15
+select Weight ,Weight/1000 as "wght in KG",Weight*1000 as "wght in MG"
+ from PARTS;
+ 
+ #2
+-- 1
+select *from SUPLIER
+order by City desc;
+
+-- 2
+select * from PARTS
+order by City,Pname desc;  
+
+-- 3
+select * from SUPLIER
+where Status between 10 and 20;
+
+-- 4
+select Pname,Weight from PARTS
+where Weight not between 10 and 20;
+
+-- 5
+select * from PARTS
+where (Pname>='S' and Pname<'T');
+
+select * from PARTS
+where Pname like'S%';
+
+-- 6
+select * from SUPLIER
+where City like 'L%';
+
+-- 7
+select * from PROJECTS
+where Jname like '__N%';
+
+
+
