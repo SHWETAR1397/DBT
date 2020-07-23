@@ -1,0 +1,160 @@
+create database lectr_day1;
+use lectr_day1;
+create table SALESPEOPLE
+(
+Snum int(4),
+Sname varchar(10),
+City varchar(10),
+Comm float(3,2)
+);
+create table CUSTOMERS
+(
+Cnum int(4),
+Cname varchar(10),
+City varchar(10),
+Rating int(4),
+Snum int(4)
+);
+
+create table ORDERS
+(
+Onum int(4),
+Amt float(7,2),
+Odate date,
+Cnum int(4),
+Snum int(4)
+);
+
+insert into SALESPEOPLE 
+values ('1001','Peel','London','.12');
+insert into SALESPEOPLE
+values ('1002','Serees','San Jose','.13');
+insert into SALESPEOPLE
+values ('1004','Motika','London','.11');
+insert into SALESPEOPLE
+values ('1007','Rifkin','Barcelona','.15');
+insert into SALESPEOPLE
+values ('1003','Axelrod','New York','.10');
+select *from SALESPEOPLE;
+
+insert into CUSTOMERS values
+('2001','Hoffman','London','100','1001'),
+('2002','Giovanni','Rome ','200','1003'),
+('2003','Liu','San Jose','200','1002'),
+('2004','Grass','Berlin ','300','1002'),
+('2006','Clemens','London ','100','1001'),
+('2008','Cisneros','San Jose','300','1007'),
+('2007','Pereira','Rome ','100','1004');
+select * from CUSTOMERS;
+
+insert into ORDERS values  
+(3001,18.69,'1990-10-03',2008,1007),
+(3003,767.19,'1990-10-03',2001,1001),
+(3002,1900.10 ,'1990-10-03',2007,1004),
+ (3005,5160.45 ,'1990-10-03',2003,1002),
+ (3006,1098.16 ,'1990-10-03',2008,1007),
+(3009,1713.23,'1990-10-04',2002,1003),
+(3007,75.75,'1990-10-04',2004,1002),
+ (3008,4723.00,'1990-10-05',2006,1001), 
+(3010,1309.95,'1990-10-06',2004,1002),
+(3011,9891.88,'1990-10-06',2006,1001);
+select *from ORDERS;
+
+#4--1
+select Onum,Amt,Odate
+from ORDERS;
+
+-- 2
+select *from CUSTOMERS  
+WHERE Snum=1001 ;
+
+-- 3
+select city, sname, snum, comm 
+from SALESPEOPLE;
+
+-- 4
+Select Cname,Rating from CUSTOMERS
+ where City = 'San Jose';
+
+-- 5
+select distinct Snum
+from ORDERS;
+
+#5--1
+ select *from ORDERS
+ WHERE Amt>1000; 
+ 
+-- 2
+select Sname,City from SALESPEOPLE
+ WHERE City='London' and Comm>(.10);
+
+-- 3 
+ select Cnum,Cname,City,Rating,Snum from CUSTOMERS 
+ where Rating>=100 or City='Rome';
+ 
+-- 4
+ Select *from ORDERS
+ where (Amt<1000 OR NOT (Odate = 1990-10-03 AND Cnum>2003));
+ 
+-- output
+ /*
+ 3001	18.69	1990-10-03	2008	1007
+3003	767.19	1990-10-03	2001	1001
+3002	1900.10	1990-10-03	2007	1004
+3005	5160.45	1990-10-03	2003	1002
+3006	1098.16	1990-10-03	2008	1007
+3009	1713.23	1990-10-04	2002	1003
+3007	75.75	1990-10-04	2004	1002
+3008	4723.00	1990-10-05	2006	1001
+3010	1309.95	1990-10-06	2004	1002
+3011	9891.88	1990-10-06	2006	1001
+*/
+
+-- 5
+  Select *from ORDERS 
+  where NOT ((Odate = 1990-10-03 OR Snum >1006) AND Amt >= 1500);
+ -- output
+ /*
+ 3001	18.69	1990-10-03	2008	1007
+3003	767.19	1990-10-03	2001	1001
+3002	1900.10	1990-10-03	2007	1004
+3005	5160.45	1990-10-03	2003	1002
+3006	1098.16	1990-10-03	2008	1007
+3009	1713.23	1990-10-04	2002	1003
+3007	75.75	1990-10-04	2004	1002
+3008	4723.00	1990-10-05	2006	1001
+3010	1309.95	1990-10-06	2004	1002
+3011	9891.88	1990-10-06	2006	1001
+*/
+
+-- 6 
+ select * from SALESPEOPLE
+ where (Comm > .12 OR Comm <.14); 
+ 
+ #6
+ -- 1
+  Select *from ORDERS
+  where (Odate >= '1990-10-03' and Odate <= '1990-10-04');
+  
+  Select *from ORDERS
+  where Odate in('1990-10-03','1990-10-04');
+  
+  -- 2
+  select * from CUSTOMERS
+  where Snum in(select Snum from SALESPEOPLE where Sname in('Peel','Motika'));
+  -- or
+  select Cname from CUSTOMERS
+  where (Snum=1001 or Snum=1004);
+  
+  -- 3
+  select *from CUSTOMERS
+  where (Cname>='A' and Cname<'H' and Cname<>'H');
+ 
+ -- 4
+ select * from CUSTOMERS
+ where Cname>'C'and Cname<'D'; 
+ 
+ -- 5
+ Select *from ORDERS
+where Amt<> 0 and Amt<>'NULL';
+ 
