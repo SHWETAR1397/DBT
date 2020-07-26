@@ -1,0 +1,119 @@
+create database asgn12;
+use asgn12;
+create table SALESPEOPLE
+(
+Snum int(4),
+Sname varchar(10),
+City varchar(10),
+Comm float(3,2)
+);
+create table CUSTOMERS
+(
+Cnum int(4),
+Cname varchar(10),
+City varchar(10),
+Rating int(4),
+Snum int(4)
+);
+create table ORDERS
+(
+Onum int(4),
+Amt float(7,2),
+Odate date,
+Cnum int(4),
+Snum int(4)
+);
+insert into SALESPEOPLE values 
+('1001','Peel','London','.12'),
+('1002','Serees','San Jose','.13'),
+('1004','Motika','London','.11'),
+('1007','Rifkin','Barcelona','.15'),
+('1003','Axelrod','New York','.10');
+select *from SALESPEOPLE;
+
+insert into CUSTOMERS values
+('2001','Hoffman','London','100','1001'),
+('2002','Giovanni','Rome ','200','1003'),
+('2003','Liu','San Jose','200','1002'),
+('2004','Grass','Berlin ','300','1002'),
+('2006','Clemens','London ','100','1001'),
+('2008','Cisneros','San Jose','300','1007'),
+('2007','Pereira','Rome ','100','1004');
+select * from CUSTOMERS;
+
+insert into ORDERS values  
+(3001,18.69,'1990-10-03',2008,1007),
+(3003,767.19,'1990-10-03',2001,1001),
+(3002,1900.10 ,'1990-10-03',2007,1004),
+ (3005,5160.45 ,'1990-10-03',2003,1002),
+ (3006,1098.16 ,'1990-10-03',2008,1007),
+(3009,1713.23,'1990-10-04',2002,1003),
+(3007,75.75,'1990-10-04',2004,1002),
+ (3008,4723.00,'1990-10-05',2006,1001), 
+(3010,1309.95,'1990-10-06',2004,1002),
+(3011,9891.88,'1990-10-06',2006,1001);
+select *from ORDERS;
+
+-- 1) Write a query that selects all customers whose ratings are equal to or greater than ANY of Serres’. 
+-- select * from CUSTOMERS
+select * from CUSTOMERS where Rating >= any
+(select CUSTOMERS.Rating from CUSTOMERS,SALESPEOPLE WHERE Sname='Serees')group by City ;
+
+-- 2) Write a query using ANY or ALL that will find all salespeople who have no customers located in their city. 
+
+select Sname,City from SALESPEOPLE where City != any
+(select a.Cname from CUSTOMERS a, SALESPEOPLE b
+where a.Snum != b.Snum
+group by a.Cname) group by City;
+
+-- 3) Write a query that selects all orders for amounts greater than any for the customers in London. 
+
+ select Onum from ORDERS WHERE Amt > any (select ORDERS.Amt from CUSTOMERS, ORDERS WHERE City='London');
+
+
+-- 4)Write a query that selects all orders for amounts greater than any for the customers in London. 
+-- Write the above query using MIN or MAX.
+
+select sum(Amt) from ORDERS group by Snum having Sum(Amt) > (select max(Amt)from ORDERS);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
