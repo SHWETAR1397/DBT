@@ -1,0 +1,67 @@
+#Assignment – 17 Constraining the Values of your data.
+create database asgn17;
+use asgn17;
+
+-- 1) Create the Orders table so that all onum values as well as all combinations of cnum and snum are different from one another, 
+-- and so that NULL values are excluded from the date field. 
+create table ORDERS
+(
+Onum int(4) unique key,
+Amt float(7,2),
+Odate date not null,
+Cnum int(4) ,
+Snum int(4) ,
+primary key(Cnum,Snum)
+);
+
+-- 2) Create the Salespeople table so that the default commission is 10% with no NULLS permitted,snum is the primary key 
+-- , and all names fall alphabetically between A and M, inclusive (assume all names will be uppercase). 
+
+create table salespeople
+(
+snum int(4) primary key,
+comm float(5,2) default 0.1 not null,
+sname varchar(10)
+check ((substr(sname,1,1)) between'A' and 'M' )
+);
+
+-- 3) Create the Orders table, making sure that the onum is greater than the cnum, 
+-- and the cnum is greater that the snum. Allow no NULLS in any of these three fields. 
+create table list
+(
+onum int(4) not null,
+snum int(4) not null,
+cnum int(4) not null,
+check(onum>cnum),
+check(cnum>snum)
+);
+insert into list (onum,cnum,snum)
+values(4,3,2);
+select * from list;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
