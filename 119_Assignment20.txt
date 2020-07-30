@@ -1,0 +1,101 @@
+#Assignment – 20 Changing Values through Views. 
+  create database asgn20;
+  use asgn20;
+create table SALESPEOPLE
+(
+Snum int(4),
+Sname varchar(10),
+City varchar(10),
+Comm float(3,2)
+);
+create table CUSTOMERS
+(
+Cnum int(4),
+Cname varchar(10),
+City varchar(10),
+Rating int(4),
+Snum int(4)
+);
+create table ORDERS
+(
+Onum int(4),
+Amt float(7,2),
+Odate date,
+Cnum int(4),
+Snum int(4)
+);
+insert into SALESPEOPLE values 
+('1001','Peel','London','.12'),
+('1002','Serees','San Jose','.13'),
+('1004','Motika','London','.11'),
+('1007','Rifkin','Barcelona','.15'),
+('1003','Axelrod','New York','.10');
+select *from SALESPEOPLE;
+
+insert into CUSTOMERS values
+('2001','Hoffman','London','100','1001'),
+('2002','Giovanni','Rome ','200','1003'),
+('2003','Liu','San Jose','200','1002'),
+('2004','Grass','Berlin ','300','1002'),
+('2006','Clemens','London ','100','1001'),
+('2008','Cisneros','San Jose','300','1007'),
+('2007','Pereira','Rome ','100','1004');
+select * from CUSTOMERS;
+
+insert into ORDERS values  
+(3001,18.69,'1990-10-03',2008,1007),
+(3003,767.19,'1990-10-03',2001,1001),
+(3002,1900.10 ,'1990-10-03',2007,1004),
+ (3005,5160.45 ,'1990-10-03',2003,1002),
+ (3006,1098.16 ,'1990-10-03',2008,1007),
+(3009,1713.23,'1990-10-04',2002,1003),
+(3007,75.75,'1990-10-04',2004,1002),
+ (3008,4723.00,'1990-10-05',2006,1001), 
+(3010,1309.95,'1990-10-06',2004,1002),
+(3011,9891.88,'1990-10-06',2006,1001);
+
+#1) Which of these views are updateable (will allow DML operations)? 
+
+#1  Create View Dailyorders as Select Distinct cnum, snum, onum, odate from Orders;  
+-- YES
+#2  Create View Custotals as Select cname, Sum (amt) Sum_Amt from Orders, Customers  where Orders.cnum=Customers.cnum  Group by cname;  
+-- NO (JOINS)
+#3  Create view Thirdorders as Select * from Dailyorders  where odate=’1990-10-03’;  
+-- NO
+#4  Create view Nullcities as Select snum, sname, city  from Salespeople  where city is NULL OR sname BETWEEN ‘A’ and ‘Z’;
+-- YES
+
+#2) Create a view of the Salespeople table called Commissions. This view will include only the snum and comm fields. 
+-- Through this view, someone could enter or change commissions, but only to values between .10 and .20. 
+create view commision as
+select Snum,Comm from SALESPEOPLE where Comm in (0.10,0.20);
+
+/*3) Some SQL implementations have a built-in constant representing the current date, sometimes called “CURDATE” or “SYSDATE”.  
+The word SYSDATE can therefore be used in a SQL statement, and be replaced by the current date when the value is accessed by 
+commands such as Select or Insert. We will use a view of the Orders table called Entryorders to insert rows into the Orders table. 
+Create the Orders table, so that SYSDATE is automatically inserted for odate if no value is given. 
+Then create the Entryorders view so that no values can be given.*/
+
+create table Norder
+(
+Onum int(4),
+Amt float(7,2),
+Odate DATE default current_timestamp,
+Cnum int(4),
+Snum int(4)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
